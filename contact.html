@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Contact - SIMPL'</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <style>
+        :root {
+            --gold-luxury: #D4AF37;
+            --gold-dark: #B8941F;
+            --gold-pale: #F4E4A6;
+            --blue-marine: #1E2A47;
+            --blue-light: #2A3D5F;
+            --blue-night: #0F1729;
+            --white-pearl: #F8F8F8;
+            --silver-gray: #E8E8E8;
+            --burgundy: #722F37;
+            --sapphire: #0F4C5C;
+            --cream: #F5F1E6;
+            --text-dark: #333333;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white-pearl);
+            color: var(--text-dark);
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .form-radio:checked {
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+        }
+        
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, -8px); }
+            100% { transform: translate(0, 0px); }
+        }
+        
+        .form-input:focus, .form-textarea:focus {
+            transform: scale(1.01);
+            transition: transform 0.2s ease;
+        }
+        
+        .radio-option {
+            transition: all 0.3s ease;
+        }
+        
+        .radio-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Bouton Accueil amélioré et déplacé en haut à gauche */
+        .home-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--gold-luxury) 0%, var(--gold-dark) 100%);
+            color: var(--blue-night);
+            border: 2px solid var(--gold-luxury);
+            padding: 0.85rem 1.75rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 
+                0 8px 25px rgba(212, 175, 55, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                0 2px 8px rgba(30, 42, 71, 0.2);
+            backdrop-filter: blur(10px);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        
+        .home-button:hover {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-luxury) 100%);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 12px 35px rgba(212, 175, 55, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                0 4px 15px rgba(30, 42, 71, 0.3);
+            color: var(--blue-night);
+        }
+        
+        .home-button:active {
+            transform: translateY(0) scale(1);
+            box-shadow: 
+                0 4px 15px rgba(212, 175, 55, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        /* Animation d'entrée élégante pour le bouton */
+        @keyframes slideInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+        
+        .home-button {
+            animation: slideInFromLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        /* Classes utilitaires pour les couleurs */
+        .bg-gold-luxury { background-color: var(--gold-luxury); }
+        .bg-gold-dark { background-color: var(--gold-dark); }
+        .bg-gold-pale { background-color: var(--gold-pale); }
+        .bg-blue-marine { background-color: var(--blue-marine); }
+        .bg-blue-light { background-color: var(--blue-light); }
+        .bg-white-pearl { background-color: var(--white-pearl); }
+        .bg-silver-gray { background-color: var(--silver-gray); }
+        .bg-burgundy { background-color: var(--burgundy); }
+        .bg-sapphire { background-color: var(--sapphire); }
+        .bg-cream { background-color: var(--cream); }
+        
+        .text-gold-luxury { color: var(--gold-luxury); }
+        .text-gold-dark { color: var(--gold-dark); }
+        .text-gold-pale { color: var(--gold-pale); }
+        .text-blue-marine { color: var(--blue-marine); }
+        .text-blue-light { color: var(--blue-light); }
+        .text-white-pearl { color: var(--white-pearl); }
+        .text-burgundy { color: var(--burgundy); }
+        .text-sapphire { color: var(--sapphire); }
+        
+        .border-gold-luxury { border-color: var(--gold-luxury); }
+        .border-blue-marine { border-color: var(--blue-marine); }
+        .border-silver-gray { border-color: var(--silver-gray); }
+    </style>
+</head>
+<body class="bg-white-pearl">
+    <!-- Bouton Accueil amélioré -->
+    <a href="index.html" class="home-button">
+        <span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px; font-size: 1.2rem;">home</span>
+        Accueil
+    </a>
+
+    <div class="relative flex w-full flex-col">
+        <div class="layout-container flex h-full grow flex-col">
+            <main class="flex-1">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-black/60 z-10"></div>
+                    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+                        <div class="parallax flex min-h-[60vh] flex-col gap-6 bg-cover bg-center bg-no-repeat items-center justify-center p-4 text-center" data-alt="Vue aérienne d'une plage luxuriante au Bénin au coucher du soleil" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYOZMQ05uO1ANZFz_sfHeQEoohnlUdyZ7d948pW1yD1yAG4CwRjHJ-_YZ2ey_mWjdOv_WEe9k8NWm9sFj99D9gtonADM40yf-nYpuypAi6BPnKKHeQjROJlgT95snG3zuKGOzBjFgjI5zVwbXrRZ-Xfe2lERPtXvVwQn5yx8iDNlXZMyW2omF4abirBdWEzUFqp57cfz7d0GWVyBP7jOeQTISzjq6eH8fa4IRzYY9Yg7j7xhRJyVr3Vp2QjkfWAWBByxiFOx3-JFP2");'>
+                            <div class="flex flex-col gap-4 max-w-3xl fade-in">
+                                <h1 class="font-display text-4xl font-bold text-white-pearl md:text-6xl lg:text-7xl">
+                                    Contact Intelligent
+                                </h1>
+                                <p class="text-lg font-light text-gold-pale md:text-xl">
+                                    Confiez-nous votre projet, nous simplifions l'exceptionnel.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container mx-auto -mt-24 px-4 sm:px-6 lg:px-8 relative z-20 pb-20">
+                    <div class="mx-auto max-w-5xl">
+                        <div class="mb-12 rounded-lg border border-silver-gray bg-blue-marine p-6 text-center text-white-pearl shadow-xl flex items-center justify-center gap-4 fade-in">
+                            <span class="material-symbols-outlined text-4xl text-gold-pale floating">timer</span>
+                            <p class="text-lg font-semibold">Un expert SIMPL' vous recontacte sous <strong>2 heures ouvrables</strong>.</p>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
+                            <div class="lg:col-span-3 slide-in-left">
+                                <div class="rounded-xl border border-silver-gray bg-cream p-6 sm:p-8 md:p-10 shadow-lg h-full">
+                                    <form action="#" method="POST" id="contact-form">
+                                        <div class="space-y-10">
+                                            <fieldset>
+                                                <h2 class="text-2xl font-display font-bold text-blue-marine">
+                                                    Quel est votre besoin ?
+                                                </h2>
+                                                <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                                    <label class="radio-option relative flex cursor-pointer rounded-lg border-2 border-silver-gray bg-white-pearl p-4 shadow-sm transition-all duration-200 focus-within:ring-2 focus-within:ring-gold-luxury focus-within:ring-offset-2 hover:border-gold-luxury has-[:checked]:border-gold-luxury has-[:checked]:bg-gold-pale">
+                                                        <input checked="" class="form-radio h-5 w-5 flex-shrink-0 border-2 border-blue-marine/50 bg-transparent text-gold-luxury checked:bg-gold-luxury focus:ring-0 focus:ring-offset-0" name="request-type" type="radio"/>
+                                                        <span class="ml-3 flex flex-col">
+                                                            <span class="block text-sm font-medium text-blue-marine">Voyage sur-mesure</span>
+                                                        </span>
+                                                    </label>
+                                                    <label class="radio-option relative flex cursor-pointer rounded-lg border-2 border-silver-gray bg-white-pearl p-4 shadow-sm transition-all duration-200 focus-within:ring-2 focus-within:ring-gold-luxury focus-within:ring-offset-2 hover:border-gold-luxury has-[:checked]:border-gold-luxury has-[:checked]:bg-gold-pale">
+                                                        <input class="form-radio h-5 w-5 flex-shrink-0 border-2 border-blue-marine/50 bg-transparent text-gold-luxury checked:bg-gold-luxury focus:ring-0 focus:ring-offset-0" name="request-type" type="radio"/>
+                                                        <span class="ml-3 flex flex-col">
+                                                            <span class="block text-sm font-medium text-blue-marine">Expérience WELOVE EYA</span>
+                                                        </span>
+                                                    </label>
+                                                    <label class="radio-option relative flex cursor-pointer rounded-lg border-2 border-silver-gray bg-white-pearl p-4 shadow-sm transition-all duration-200 focus-within:ring-2 focus-within:ring-gold-luxury focus-within:ring-offset-2 hover:border-gold-luxury has-[:checked]:border-gold-luxury has-[:checked]:bg-gold-pale">
+                                                        <input class="form-radio h-5 w-5 flex-shrink-0 border-2 border-blue-marine/50 bg-transparent text-gold-luxury checked:bg-gold-luxury focus:ring-0 focus:ring-offset-0" name="request-type" type="radio"/>
+                                                        <span class="ml-3 flex flex-col">
+                                                            <span class="block text-sm font-medium text-blue-marine">Événement spécial</span>
+                                                        </span>
+                                                    </label>
+                                                    <label class="radio-option relative flex cursor-pointer rounded-lg border-2 border-silver-gray bg-white-pearl p-4 shadow-sm transition-all duration-200 focus-within:ring-2 focus-within:ring-gold-luxury focus-within:ring-offset-2 hover:border-gold-luxury has-[:checked]:border-gold-luxury has-[:checked]:bg-gold-pale">
+                                                        <input class="form-radio h-5 w-5 flex-shrink-0 border-2 border-blue-marine/50 bg-transparent text-gold-luxury checked:bg-gold-luxury focus:ring-0 focus:ring-offset-0" name="request-type" type="radio"/>
+                                                        <span class="ml-3 flex flex-col">
+                                                            <span class="block text-sm font-medium text-blue-marine">Demande générale</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </fieldset>
+                                            <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                                <div class="sm:col-span-3">
+                                                    <label class="block text-sm font-medium leading-6 text-blue-marine" for="first-name">Prénom</label>
+                                                    <div class="mt-2">
+                                                        <input class="form-input block w-full rounded-lg border-0 bg-white-pearl py-2.5 text-blue-marine shadow-sm ring-1 ring-inset ring-silver-gray placeholder:text-blue-light focus:ring-2 focus:ring-inset focus:ring-gold-luxury sm:text-sm sm:leading-6" id="first-name" name="first-name" placeholder="Votre prénom" type="text" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="sm:col-span-3">
+                                                    <label class="block text-sm font-medium leading-6 text-blue-marine" for="last-name">Nom</label>
+                                                    <div class="mt-2">
+                                                        <input class="form-input block w-full rounded-lg border-0 bg-white-pearl py-2.5 text-blue-marine shadow-sm ring-1 ring-inset ring-silver-gray placeholder:text-blue-light focus:ring-2 focus:ring-inset focus:ring-gold-luxury sm:text-sm sm:leading-6" id="last-name" name="last-name" placeholder="Votre nom" type="text" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="sm:col-span-3">
+                                                    <label class="block text-sm font-medium leading-6 text-blue-marine" for="email">Email</label>
+                                                    <div class="mt-2">
+                                                        <input class="form-input block w-full rounded-lg border-0 bg-white-pearl py-2.5 text-blue-marine shadow-sm ring-1 ring-inset ring-silver-gray placeholder:text-blue-light focus:ring-2 focus:ring-inset focus:ring-gold-luxury sm:text-sm sm:leading-6" id="email" name="email" placeholder="exemple@email.com" type="email" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="sm:col-span-3">
+                                                    <label class="block text-sm font-medium leading-6 text-blue-marine" for="phone">Téléphone</label>
+                                                    <div class="mt-2">
+                                                        <input class="form-input block w-full rounded-lg border-0 bg-white-pearl py-2.5 text-blue-marine shadow-sm ring-1 ring-inset ring-silver-gray placeholder:text-blue-light focus:ring-2 focus:ring-inset focus:ring-gold-luxury sm:text-sm sm:leading-6" id="phone" name="phone" placeholder="+ indicatif" type="tel" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-span-full">
+                                                    <label class="block text-sm font-medium leading-6 text-blue-marine" for="message">Votre message</label>
+                                                    <div class="mt-2">
+                                                        <textarea class="form-textarea block w-full rounded-lg border-0 bg-white-pearl py-2.5 text-blue-marine shadow-sm ring-1 ring-inset ring-silver-gray placeholder:text-blue-light focus:ring-2 focus:ring-inset focus:ring-gold-luxury sm:text-sm sm:leading-6" id="message" name="message" placeholder="Donnez-nous plus de détails sur votre projet..." rows="4" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-10">
+                                                <button id="submit-btn" class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-gold-luxury hover:bg-gold-dark text-blue-marine text-base font-bold leading-normal tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-luxury pulse-glow" type="submit">
+                                                    <span id="btn-text">Envoyer ma demande</span>
+                                                    <span id="btn-loading" class="hidden">
+                                                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-marine" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                        </svg>
+                                                        Envoi en cours...
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-2 space-y-8 slide-in-right">
+                                <div class="aspect-w-4 aspect-h-3">
+                                    <img alt="Femme béninoise souriante en tenue traditionnelle" class="w-full h-full object-cover rounded-xl shadow-lg floating" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7x6DD4F2qGX2cQZuI9K0jpJ3LeQqhELTcVLH0IQKQal3uZcF7k-eoIgb7-EdiKyvP7kLyS_V0rgyQdtrKuL4Yb1a-Be1jSG1ChCi71aWDpxGng3f4iTa_jYRLj0AT_RAuUtXlHoBJ57wua5qKg117fw9ReYJkPvzEngVnTJ156BbbzE_iEO_6-Cj0IcrW_OeZziMgNKKgIpoODjjNxrNtiX9DONZyJ0MuW810xq1tPwa1ZwEBvZNQXX5n3psRE1YZeozgvy-SvqJL"/>
+                                </div>
+                                <div class="rounded-xl border border-silver-gray bg-cream p-6 sm:p-8 shadow-lg">
+                                    <h3 class="text-xl font-display font-bold text-blue-marine">Contact Direct</h3>
+                                    <p class="mt-2 text-blue-light">Pour ceux qui préfèrent nous joindre directement.</p>
+                                    <div class="mt-6 space-y-4">
+                                        <a class="flex items-center gap-4 text-gold-luxury hover:underline transition-all duration-300 hover:translate-x-1" href="mailto:contact@simpl.bj">
+                                            <span aria-hidden="true" class="material-symbols-outlined text-4xl">mail</span>
+                                            <span class="font-medium">contact@simpl.bj</span>
+                                        </a>
+                                        <a class="flex items-center gap-4 text-gold-luxury hover:underline transition-all duration-300 hover:translate-x-1" href="https://wa.me/+22991464297">
+                                            <svg class="h-10 w-10 fill-current" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>WhatsApp</title><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.204-1.634a11.86 11.86 0 005.785 1.47h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
+                                            <span class="font-medium">WhatsApp Business</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Animation d'apparition au défilement
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Gestion du formulaire
+            const form = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnLoading = document.getElementById('btn-loading');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulation d'envoi
+                btnText.classList.add('hidden');
+                btnLoading.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    // Réinitialiser le formulaire
+                    form.reset();
+                    btnText.classList.remove('hidden');
+                    btnLoading.classList.add('hidden');
+                    
+                    // Afficher un message de succès (vous pourriez ajouter une notification ici)
+                    alert('Votre message a été envoyé avec succès ! Un expert SIMPL\' vous recontactera dans les 2 heures ouvrables.');
+                }, 2000);
+            });
+
+            // Amélioration de l'interaction des champs
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('ring-2', 'ring-gold-luxury', 'ring-opacity-50');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('ring-2', 'ring-gold-luxury', 'ring-opacity-50');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
